@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DataSeeder implements CommandLineRunner  {
-
     private final PermissionRepository permissionRepository;
 
 

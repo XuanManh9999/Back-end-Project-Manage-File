@@ -1,6 +1,10 @@
 package com.back_end_TN.project_tn.controllers;
 
+import com.back_end_TN.project_tn.dtos.request.ForgotPasswordRequest;
+import com.back_end_TN.project_tn.dtos.request.RegisterRequest;
 import com.back_end_TN.project_tn.dtos.request.SignInRequest;
+import com.back_end_TN.project_tn.dtos.request.VerifyOtpRequest;
+import com.back_end_TN.project_tn.dtos.response.CommonResponse;
 import com.back_end_TN.project_tn.dtos.response.TokenResponse;
 import com.back_end_TN.project_tn.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,4 +37,26 @@ public class AuthenticationController {
     public ResponseEntity<TokenResponse> refresh (HttpServletRequest request) {
         return new ResponseEntity<>(authenticationService.refresh(request), HttpStatus.OK);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<CommonResponse> register (@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authenticationService.registerUser(registerRequest));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<CommonResponse> forgotPassword (@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.forgotPassworrdUser(forgotPasswordRequest));
+    }
+
+    @PostMapping("/verify-otp-register")
+    public ResponseEntity<CommonResponse> verifyOtpRegister(@RequestBody VerifyOtpRequest verifyOtpRequest) {
+        return authenticationService.verifyOtpRegisteredUser(verifyOtpRequest);
+    }
+
+    @PostMapping("/verify-otp-forgot-password")
+    public ResponseEntity<CommonResponse> verifyOtpForgotPassword(@RequestBody VerifyOtpRequest verifyOtpRequest) {
+        return authenticationService.verifyOtpForgotPassword(verifyOtpRequest);
+    }
+
+
 }
